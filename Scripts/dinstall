@@ -1,0 +1,10 @@
+#!/bin/sh
+
+filepath="$1"
+
+cd "$filepath"
+pwd
+
+docker system prune --force --volumes
+docker build -t assignment:latest .
+docker run -it --name project assignment:latest

@@ -1,0 +1,57 @@
+#!/bin/bash
+initial_wd="/Users/jacobkoll/Academic/"
+session="$1"
+
+############################### CHECK SESSION ###############################
+# tmux has-session -t $session 2>/dev/null
+
+############################### OPEN DIRS ###############################
+
+# opens all my scripts
+if [[ "$session" == *'scripts'* ]]
+then
+	# if [ $? != 0 ]; then
+	session_wd="~/Scripts/"
+
+	tmux new-window -a -n Scripts -t "$session":$
+	tmux send-keys "vim "$session_wd"" Enter
+	tmux send-keys ":tabe "$session_wd"session" Enter
+	tmux send-keys ":tabe "$session_wd"open" Enter
+	tmux send-keys ":tabe "$session_wd"show" Enter
+	tmux send-keys ":tabe "$session_wd"build" Enter
+	tmux send-keys ":tabe "$session_wd"connect" Enter
+	tmux send-keys ":tabe "$session_wd"cronBuild" Enter
+
+	tmux new-window -a -n Configs -t "$session":$
+	tmux send-keys "vim "$session_wd"" Enter
+	tmux send-keys ":tabe ~/.vimrc" Enter
+	tmux send-keys ":tabe ~/.bashrc" Enter
+	tmux send-keys ":tabe ~/.tmux.conf" Enter
+	# fi
+# opens all my notes 
+elif [[ "$session" == *'notes'* ]]
+then
+	session_wd="~/Academic/Notes"
+
+	tmux new-window -a -n Notes -t "$session":$
+	tmux send-keys "vim "$session_wd"" Enter
+else
+	session_wd="$initial_wd""$session""/"
+
+	tmux new-window -a -n Latex -t "$session":$
+	tmux send-keys "cd "$session_wd""/Coursework"" Enter
+	tmux send-keys "vim "$session_wd""/Coursework"" Enter
+	
+	tmux new-window -a -n Uml -t "$session":$
+	tmux send-keys "cd "$session_wd""/Coursework"" Enter
+	tmux send-keys "vim "$session_wd""/Coursework"" Enter
+	
+	tmux new-window -a -n Notes -t "$session":$
+	tmux send-keys "cd "$session_wd""/Notes"" Enter
+	tmux send-keys "vim "$session_wd""/Notes"" Enter
+
+	#tmux send-keys "connect" Enter
+	tmux new-window -a -n Vim -t "$session":$
+	tmux send-keys "cd "$session_wd"" Enter
+	tmux send-keys "vim "$session_wd"" Enter
+fi

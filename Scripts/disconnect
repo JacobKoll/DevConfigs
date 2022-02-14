@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SESSION=$(tmux display-message -p "#S")
+
+if [ -z $1 ]; then
+	NAME="$"
+else
+	NAME=$1
+fi
+
+EXISTS="$(tmux display-message -t "$SESSION":"$NAME" >/dev/null && echo 1)"
+if [ "$EXISTS" == 1 ]; then
+	tmux kill-window -t "$SESSION":"$NAME"
+fi

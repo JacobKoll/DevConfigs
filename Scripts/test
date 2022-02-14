@@ -1,0 +1,31 @@
+#!/bin/bash
+initial_wd="/Users/jacobkoll/Work/"
+session="$1"
+
+############################### CHECK SESSION ###############################
+# tmux has-session -t $session 2>/dev/null
+
+############################### OPEN DIRS ###############################
+
+# opens all my scripts
+if [[ "$session" == *'scripts'* ]]
+then
+	# if [ $? != 0 ]; then
+	session_wd="~/Scripts/"
+	tmux new-session -d -n Terminal -s "$session"
+	tmux send-keys "cd "$session_wd"" Enter
+	tmux send-keys "vim "$session_wd"" Enter
+	tmux send-keys ":tabe ~/.tmux.conf" Enter
+	# fi
+fi
+if [[ "$session" == *'test'* ]]
+then
+	# if [ $? != 0 ]; then
+	session_wd="~/Scripts/"
+	tmux new-window -a -n Configs -t scripts:$
+	tmux send-keys "vim "$session_wd"" Enter
+	tmux send-keys ":tabe ~/.vimrc" Enter
+	# fi
+fi
+
+tmux attach-session -t $session

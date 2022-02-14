@@ -1,0 +1,29 @@
+#!/bin/bash
+initial_wd="/Users/jacobkoll/Academic/"
+session="$1"
+session_wd="$initial_wd""$session""/"
+
+############################### CHECK SESSION ###############################
+# tmux has-session -t $session 2>/dev/null
+
+############################### OPEN DIRS ###############################
+
+tmux has-session -t $session 2>/dev/null
+if [[ $? != 0 ]]
+then
+	# opens all my scripts
+	if [[ "$session" == *'scripts'* ]]
+	then
+		session_wd="~/Scripts/"
+	fi
+	# opens all my notes 
+	if [[ "$session" == *'notes'* ]]
+	then
+		session_wd="~/Academic/Notes/"
+	fi
+	tmux new-session -d -n Terminal -s "$session"
+	tmux send-keys "cd "$session_wd"" Enter
+	tmux send-keys "open "$session"" Enter
+fi
+
+tmux attach-session -t $session

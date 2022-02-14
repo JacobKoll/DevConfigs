@@ -1,0 +1,14 @@
+#!/bin/sh
+
+filepath="$1"
+
+function activate () {
+	cd "$filepath"
+	pwd
+
+	python3 -m venv csvenv
+	source csvenv/bin/activate
+	python3 -m pip install --upgrade pip
+	python3 -m pip install -r requirements.txt
+}
+activate

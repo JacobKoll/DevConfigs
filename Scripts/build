@@ -1,0 +1,61 @@
+#!/bin/sh
+
+script="$1"
+filename="$2"
+filepath="$3"
+
+# compiles python and cleans up 
+if [[ "$script" == 'python' ]]
+then
+	cd "$filepath"
+	pwd
+	python3 "RavensProject.py"
+	cat "ProblemResults.csv"
+fi
+
+# compiles shell and cleans up 
+if [[ "$script" == 'env' ]]
+then
+	cd "$filepath"
+	pwd
+	./activate "$filepath"
+fi
+# compiles uml and cleans up 
+if [[ "$script" == 'uml' ]]
+then
+	cd "$filepath"
+	pwd
+	java -Djava.awt.headless=true -jar /Users/jacobkoll/Scripts/Uml/plantuml.jar -ttxt "$filename"".uml"
+	java -Djava.awt.headless=true -jar /Users/jacobkoll/Scripts/Uml/plantuml.jar "$filename"".uml"
+	mv "$filename"".atxt" ../Media/
+	mv "$filename"".png" ../Media/
+	cat "../Media/""$filename"".atxt"
+fi
+# compiles latex and cleans up 
+if [[ "$script" == 'latex' ]]
+then
+	cd "$filepath"
+	pwd
+	pdflatex "$filename"".tex"
+	biber "$filename"
+	pdflatex "$filename"".tex"
+	rm "$filename"".out"
+	rm "$filename"".aux"
+	rm "$filename"".log"
+	rm "$filename"".bbl"
+	rm "$filename"".bcf"
+	rm "$filename"".blg"
+	rm "$filename"".run.xml"
+	mv "$filename"".pdf" ../Documents/
+fi
+# compiles latex and cleans up 
+if [[ "$script" == 'xelatex' ]]
+then
+	cd "$filepath"
+	pwd
+	xelatex "$filename"".tex"
+	rm "$filename"".out"
+	rm "$filename"".aux"
+	rm "$filename"".log"
+	mv "$filename"".pdf" Documents/
+fi

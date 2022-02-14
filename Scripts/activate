@@ -1,0 +1,13 @@
+#!/bin/sh
+
+filepath="$1"
+basepath=$(basename "$filepath")
+
+cd "$filepath"
+pwd
+
+docker restart project
+docker exec project rm -rf /"$basepath"/
+docker cp "$filepath" project:/
+docker restart project
+docker attach project

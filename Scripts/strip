@@ -1,0 +1,54 @@
+#!/bin/bash
+
+RPI_DEPLOYMENT=~jmkoll/Radios/2G_Pi_jmkoll.json   # Change this to be your pi's
+USERNAME=root
+PASSWORD=root
+SESSION=$(tmux display-message -p "#S")
+LOGIN_COMMAND="tail -fn +1 /tmp/rccf-*.log &"
+
+# Defaults to RPi Deployment when no arguments are passed
+if [ -z $1 ]; then
+	TARGET_DEPLOYMENT=$RPI_DEPLOYMENT
+	NAME="RPi"	# Pane title for RPi's
+	LOGIN_COMMAND="cd /RCCF && ./s"
+else
+	TARGET_DEPLOYMENT=$1
+	NAME=$(basename "$TARGET_DEPLOYMENT" ".json")	# Pane title = filename
+	NAME=${NAME//_/ }	# Replace underscore with space
+	NAME=${NAME^^}		# Convert to Uppercase
+fi
+
+disconnect "$NAME"
+
+FIRST_IP=true
+for BOARD_IP in $(grep -oP '(?<="IP": ")[^"]*' $TARGET_DEPLOYMENT)
+do
+    if [ $BOARD_IP != null ]; then
+            if [ $FIRST_IP = true ]; then
+                tmux new-window -a -n "$NAME" -t "$SESSION":$
+                FIRST_IP=false
+            else
+                tmux split-window -v
+            fi
+            tmux send-keys "sshpass -p '$PASSWORD' ssh -o StrictHostKeyChecking=no $USERNAME@$BOARD_IP" Enter
+    fi
+done
+tmux select-layout even-vertical
+tmux setw synchronize-panes on
+tmux send-keys "$LOGIN_COMMAND" Enter C-l	# Send login command and clear the screen
+
+FIRST_TAM=true
+for BOARD_TAM in $(grep -oP '(?<="TAM": ")[^"]*' $TARGET_DEPLOYMENT)
+do
+    if [ $BOARD_TAM != null ]; then
+            if [ $FIRST_TAM = true ]; then
+                tmux new-window -a -n "$NAME""TAM" -t "$SESSION":$
+                FIRST_TAM=false
+            else
+                tmux split-window -v
+            fi
+            tmux send-keys "sshpass -p '$PASSWORD' ssh -o StrictHostKeyChecking=no $USERNAME@$BOARD_TAM" Enter
+    fi
+done
+tmux select-layout even-vertical
+tmux setw synchronize-panes on

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /User/jacobkoll/Work/
+yes | git clean -xdf
+yes | git pull
+build viper an
+cd /User/jacobkoll/Work/
+yes | git pull
+build viper a
+cd /User/jacobkoll/Work/
+yes | git pull
+build viper a
+sleep 10

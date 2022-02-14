@@ -1,8 +1,10 @@
 *
-!*/Scripts
+!Scripts/
+!Scripts/**
 !.gitignore
 !.vimrc
 !.bashrc
 !.tmux.conf
 !.bash_aliases
 !.bash_profile
+*.DS_Store

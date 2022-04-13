@@ -23,7 +23,7 @@ then
 	fi
 	tmux new-session -d -n Terminal -s "$session"
 	tmux send-keys "cd "$session_wd"" Enter
-	tmux send-keys "open "$session"" Enter
+	tmux send-keys "open_session "$session"" Enter
 fi
 
 tmux attach-session -t $session

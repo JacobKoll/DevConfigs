@@ -18,6 +18,8 @@ Plugin 'tpope/vim-commentary'
 
 Plugin 'joshdick/onedark.vim'
 
+Plugin 'sgur/vim-editorconfig'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -37,6 +39,8 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+autocmd BufEnter * let g:editorconfig_root_chdir = finddir('.git/..', expand('%:p:h').';')
 
 set encoding=utf-8
 scriptencoding utf-8
@@ -105,7 +109,8 @@ nnoremap <C-f> :NERDTreeFind<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.build/*
 set mouse=a
 
-set smarttab
+" managed by editorconfig
+" set smarttab
 set autoindent smartindent
 
 "set soft word wrapping
@@ -120,6 +125,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
+" managed by editorconfig
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype json setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype cpp setlocal expandtab tabstop=3 shiftwidth=3 softtabstop=3
@@ -135,6 +141,7 @@ autocmd FileType conf set filetype=make
 augroup filetypedetect
     au BufRead,BufNewFile *tmux.conf set filetype=sh
 augroup END
+autocmd BufEnter * lcd %:p:h
 
 set background=dark 
 colorscheme onedark

@@ -28,7 +28,7 @@ then
 	tmux send-keys ":tabe ~/.bashrc" Enter
 	tmux send-keys ":tabe ~/.tmux.conf" Enter
 	# fi
-# opens all my notes 
+# opens all my notes
 elif [[ "$session" == *'notes'* ]]
 then
 	session_wd="~/Academic/Notes"
@@ -38,20 +38,20 @@ then
 else
 	session_wd="$initial_wd""$session""/"
 
-	tmux new-window -a -n Latex -t "$session":$
-	tmux send-keys "cd "$session_wd""/Coursework"" Enter
-	tmux send-keys "vim "$session_wd""/Coursework"" Enter
-	
-	tmux new-window -a -n Uml -t "$session":$
-	tmux send-keys "cd "$session_wd""/Coursework"" Enter
-	tmux send-keys "vim "$session_wd""/Coursework"" Enter
-	
-	tmux new-window -a -n Notes -t "$session":$
-	tmux send-keys "cd "$session_wd""/Notes"" Enter
-	tmux send-keys "vim "$session_wd""/Notes"" Enter
+	# tmux new-window -a -n Latex -t "$session":$
+	#tmux send-keys "cd "$session_wd""/Coursework"" Enter
+	#tmux send-keys "vim "$session_wd""/Coursework"" Enter
 
-	#tmux send-keys "connect" Enter
-	tmux new-window -a -n Vim -t "$session":$
-	tmux send-keys "cd "$session_wd"" Enter
-	tmux send-keys "vim "$session_wd"" Enter
+	#tmux new-window -a -n Uml -t "$session":$
+	#tmux send-keys "cd "$session_wd""/Coursework"" Enter
+	#tmux send-keys "vim "$session_wd""/Coursework"" Enter
+
+	#tmux new-window -a -n Notes -t "$session":$
+	#tmux send-keys "cd "$session_wd""/Notes"" Enter
+	#tmux send-keys "vim "$session_wd""/Notes"" Enter
+
+	##tmux send-keys "connect" Enter
+	#tmux new-window -a -n Vim -t "$session":$
+	#tmux send-keys "cd "$session_wd"" Enter
+	#tmux send-keys "vim "$session_wd"" Enter
 fi

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Define list of repos
+REPOS="$@"
+TIMEDATE=$(date +%s)
+
+REPO_PATH="/tmp/move-splunk-ta-images_${TIMEDATE}"
+COOKIECUTTER_PATH="/tmp/cookiecutter-splunk-ta-images_${TIMEDATE}"
+ORG_NAME="devnull"
+mkdir $REPO_PATH
+mkdir $COOKIECUTTER_PATH
+
+# Clone Repos
+# drop cookie cutter image files into repos
+# edit app.conf to bump version
+for REPO in $REPOS
+do
+	echo $REPO
+	cd $REPO_PATH
+	echo "$REPO_PATH"
+	gh repo clone github.hy-vee.cloud/devnull/${REPO}
+	cd $COOKIECUTTER_PATH
+	echo "$COOKIECUTTER_PATH"
+	{ echo "yes"; echo "$REPO"; echo "$ORG_NAME"; echo "$REPO"; echo -e "\n"; echo -e "\n"; } | cookiecutter git@github.hy-vee.cloud:devnull/splunk_ta_cookiecutter.git
+	cp -r $COOKIECUTTER_PATH/$REPO/ci $REPO_PATH/$REPO/
+	vim $REPO_PATH/$REPO/default/app.conf
+done
+
+read -n 1 -p "Press enter to commit changes."
+
+# Push up changes!
+for REPO in $REPOS
+do
+	cd $REPO_PATH/$REPO
+	echo $REPO_PATH/$REPO
+	git checkout -b move-splunk-ta-images_${TIMEDATE}
+	git add -A
+	git commit -m "move splunk ta utility images ${TIMEDATE}"
+	git push origin move-splunk-ta-images_${TIMEDATE}
+	gh pr create --fill --draft
+done

@@ -25,9 +25,9 @@ test() {
 
 export TERM=xterm-256color
 # for bash not needed for zsh
-# export PATH="~/Scripts/:~/Scripts/Uml/:$PATH"
-path+=('/Users/Jacob.Koll/Scripts')
-path+=('/Users/Jacob.Koll/Library/Python/3.9/bin')
+# export PATH="~/DevConfigs/Scripts/:~/DevConfigs/Scripts/Uml/:$PATH"
+path+=(~/DevConfigs/Scripts)
+path+=(~/Library/Python/3.9/bin)
 export path
 
 export LC_ALL=en_US.UTF-8

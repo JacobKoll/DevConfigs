@@ -1,5 +1,5 @@
 #!/bin/bash
-initial_wd="$(PWD)"
+initial_wd="$(pwd)"
 session="$(basename "$initial_wd")"
 session_wd="$initial_wd"
 
@@ -12,6 +12,9 @@ then
 	tmux send-keys "cd "$session_wd"" Enter
 	tmux send-keys "open_session "$session_wd"" Enter
 	tmux split-window -vb -t "$session":0 "vim ./"
+	tmux send-keys ":PluginInstall" Enter
+	tmux send-keys ":source ~/.vimrc" Enter
+	tmux send-keys ":q" Enter
 fi
 
 tmux attach-session -t $session

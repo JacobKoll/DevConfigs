@@ -39,7 +39,7 @@ test() {
 }
 
 export TERM=xterm-256color
-export PATH="~/DevConfigs/Scripts/:~/DevConfigs/Scripts/Uml/:$PATH"
+export PATH="~/Workspace/DevConfigs/Scripts/:~/Workspace/DevConfigs/Scripts/Uml/:$PATH"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8

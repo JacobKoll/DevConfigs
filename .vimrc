@@ -46,6 +46,7 @@ set encoding=utf-8
 scriptencoding utf-8
 set list
 set listchars=eol:\|,tab:··\|
+set backspace=indent,eol,start
 
 syntax enable
 
@@ -143,7 +144,7 @@ augroup filetypedetect
 augroup END
 autocmd BufEnter * lcd %:p:h
 
-set background=dark 
+set background=dark
 colorscheme onedark
 set t_Co=256
 set t_ut=

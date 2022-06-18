@@ -57,3 +57,4 @@ function intercept() {
 	echo "\033[0;32m+ fly -t $TEAM intercept -j ${PIPELINE}/${TASK}\033[0m"
 	fly -t $TEAM intercept -j "${PIPELINE}/${TASK}"
 }
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

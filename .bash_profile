@@ -21,3 +21,4 @@ unset __conda_setup
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
 export PATH
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
